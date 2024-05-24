@@ -56,7 +56,6 @@ app.get("/api/shorturl/:id", async (req, res) => {
 
 app.post("/api/shorturl", async (req, res) => {
   try {
-
     let urlPattern = new RegExp(
       "^(https?:\\/\\/)?" + // validate protocol
         "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // validate domain name
@@ -67,7 +66,8 @@ app.post("/api/shorturl", async (req, res) => {
       "i"
     );
 
-    if (!urlPattern.test(urlString)) return res.status(400).json({ error: "invalid url" })
+    if (!urlPattern.test(req.body.url))
+      return res.status(400).json({ error: "invalid url" });
 
     const newUrl = new UrlModel({
       orignUrl: req.body.url,
