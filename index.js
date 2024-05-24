@@ -65,8 +65,8 @@ app.post("/api/shorturl", async (req, res) => {
     });
 
     res.json({
-      original_url: req.body.url,
-      short_url: `${req.hostname}/api/shorturl/${newUrl._id}`,
+      original_url : req.body.url,
+      short_url : newUrl._id,
     });
   } catch (e) {
     console.log(e);
