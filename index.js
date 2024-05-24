@@ -39,15 +39,16 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
-
 app.get("/api/shorturl/:id", async (req, res) => {
   try {
-    let orignUrl = await UrlModel.findById(req.params.id).then( async (data, err) => {
-      if (err) return res.status(404).json({ error_message: err });
-      data.click += 1;
-      await data.save();
-      res.redirect(data.orignUrl);
-    });
+    let orignUrl = await UrlModel.findById(req.params.id).then(
+      async (data, err) => {
+        if (err) return res.status(404).json({ error_message: err });
+        data.click += 1;
+        await data.save();
+        res.redirect(data.orignUrl);
+      }
+    );
   } catch (e) {
     res.status(500).json({ message: e });
   }
@@ -63,10 +64,9 @@ app.post("/api/shorturl", async (req, res) => {
     await newUrl.save().then(() => {
       console.log("New url added!");
     });
-
     res.json({
-      original_url : req.body.url,
-      short_url : newUrl._id,
+      original_url: req.body.url,
+      short_url: String(newUrl._id),
     });
   } catch (e) {
     console.log(e);
